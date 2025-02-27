@@ -1,0 +1,44 @@
+{% set name = "genesis-world" %}
+{% set version = "0.2.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/genesis_world-{{ version }}.tar.gz
+  sha256: 2b97a1229dc49e4403204f2b0cbca590e1b4bc39e72638b96621122d55b41b1e
+
+build:
+  number: 1
+  script: {{ PYTHON }} -m pip install . -vv
+  noarch: python
+
+requirements:
+  host:
+    - pip
+    - python {{ python_min }}
+    - pytorch
+    - setuptools
+  run:
+    - python >={{ python_min }}
+    - pytorch
+
+test:
+  imports:
+    - genesis
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python {{ python_min }}
+
+about:
+  home: https://github.com/Genesis-Embodied-AI/Genesis
+  summary: A generative world for general-purpose robotics & embodied AI learning
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jeongseok-meta
